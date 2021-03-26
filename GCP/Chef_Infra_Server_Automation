@@ -26,3 +26,10 @@ sudo chef-automate config show
 sudo cat automate-credentials.toml
 
 #Now, you can access your Chef Automate WEB UI - https://"your-instance-public-ip-address"
+
+#Create a new directory that will house the necessary security keys for Chef Infra.
+sudo mkdir -p ~/.chef
+#sudo chef-server-ctl user-create USER_NAME FIRST_NAME LAST_NAME EMAIL 'PASSWORD' --filename USER_NAME.pem
+sudo chef-server-ctl user-create aaron Yu Zhou aaron.zhouyu@gmail.com 'passw0rd' --filename ~/.chef/aaron.pem
+#sudo chef-server-ctl org-create SHORT_NAME 'FULL_ORGANIZATION_NAME' --association_user USER_NAME --filename ORGANIZATION-validator.pem
+sudo chef-server-ctl org-create chef_demo 'Chef Demo' --association_user aaron --filename chef_demo.pem
