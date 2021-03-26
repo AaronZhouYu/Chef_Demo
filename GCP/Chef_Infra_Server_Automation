@@ -1,0 +1,28 @@
+sudo apt update && sudo apt upgrade -y
+
+curl https://packages.chef.io/files/current/latest/chef-automate-cli/chef-automate_linux_amd64.zip | gunzip - > chef-automate && chmod +x chef-automate
+
+sudo sysctl -w vm.max_map_count=262144
+sudo sysctl -w vm.dirty_expire_centisecs=20000
+
+#To make these changes permanent, add the following to /etc/sysctl.conf:
+#vm.max_map_count=262144
+#vm.dirty_expire_centisecs=20000
+
+sudo chef-automate deploy --product automate --product infra-server
+sudo chef-automate init-config
+
+#Add a stanza to the configuration file to deploy Chef Automate and Chef Infra Server:
+sudo vi config.toml
+#  [deployment.v1.svc]
+#  products=["automate", "infra-server"]
+#  [global.v1]
+#  fqdn = "your-instance-public-ip-address"
+
+sudo chef-automate config set config.toml
+sudo chef-automate config show
+
+#To extract login credentials <username> and <password>
+sudo cat automate-credentials.toml
+
+#Now, you can access your Chef Automate WEB UI - https://"your-instance-public-ip-address"
