@@ -1,17 +1,13 @@
-#Perform a quick update on the instance:
-sudo yum update -y
- 
-#Install git in the instance
-sudo yum install git -y
-
-#Install wget in the instance
-sudo yum install wget -y
+sudo apt update && sudo apt upgrade -y
 
 sudo wget https://packages.chef.io/files/stable/chef-workstation/21.2.303/ubuntu/20.04/chef-workstation_21.2.303-1_amd64.deb
-sudo chmod 755 chef-workstation-*
-sudo dpkg -i chef-workstation-*
+sudo chmod 755 chef-workstation_*
+sudo dpkg -i chef-workstation_*
 
 chef -v
 
 #Add Ruby to $PATH in Bash Shell
 echo 'export PATH="/opt/chef-workstation/embedded/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
+
+chef generate repo chef-repo
+mkdir -p ./chef-repo/.chef
