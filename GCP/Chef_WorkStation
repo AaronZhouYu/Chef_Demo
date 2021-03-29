@@ -7,7 +7,20 @@ sudo dpkg -i chef-workstation_*
 chef -v
 
 #Add Ruby to $PATH in Bash Shell
-echo 'export PATH="/opt/chef-workstation/embedded/bin:$PATH"' >> ~/.bash_profile && source ~/.bash_profile
+echo 'eval "$(chef shell-init bash)"' >> ~/.bashrc
 
 chef generate repo chef-repo
-mkdir -p ./chef-repo/.chef
+mkdir -p ~/chef-repo/.chef
+
+#After grnerating the .pem files from Chef Infra Server for user and organization, using SCP to download the .pem files to the directory: ~/chef-repo/.chef
+cd ~/chef-repo/.chef
+scp -i ~/.ssh/id_rsa aaron_zhouyu@10.148.0.2:~/.chef/aaron.pem ./
+scp -i ~/.ssh/id_rsa aaron_zhouyu@10.148.0.2:~/chef_demo.pem ./
+
+#Run 'knife configure' to generate the config.rb file in ~/.chef/
+knife configure
+cd ~
+cp ~/chef-repo/.chef/*.pem cd ~/.chef/.
+knife ssl fetch
+knife client list
+knife ssl check
