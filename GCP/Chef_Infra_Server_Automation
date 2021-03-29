@@ -33,3 +33,5 @@ sudo mkdir -p ~/.chef
 sudo chef-server-ctl user-create aaron Yu Zhou aaron.zhouyu@gmail.com 'passw0rd' --filename ~/.chef/aaron.pem
 #sudo chef-server-ctl org-create SHORT_NAME 'FULL_ORGANIZATION_NAME' --association_user USER_NAME --filename ORGANIZATION-validator.pem
 sudo chef-server-ctl org-create chef_demo 'Chef Demo' --association_user aaron --filename chef_demo.pem
+
+#Switch to the Chef WorkStation, and use SCP to copy the generated USER_NAME.pem and ORGANIZATION-validator.pem to ~/.chef, and create config.rb file and get SSL certs from the Chef Infra Server
