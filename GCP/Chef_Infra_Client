@@ -1,0 +1,31 @@
+#Use the SSH KetGen to generate a key pair (Public and Private) in the ~/.ssh firectory
+ssh-keygen -t rsa
+
+#Bootstrap the Chef Infra Client from the Chef Workstation
+knife bootstrap 10.148.0.3 -i ~/.ssh/id_rsa -U aaron_zhouyu -N chef-node-0 --sudo
+knife bootstrap 10.148.0.4 -i ~/.ssh/id_rsa -U aaron_zhouyu -N chef-node-1 --sudo
+knife bootstrap 10.148.0.5 -i ~/.ssh/id_rsa -U aaron_zhouyu -N chef-node-2 --sudo
+
+knife client show chef-node-0
+# admin:     false
+# chef_type: client
+# name:      chef-node-0
+# validator: false
+
+knife client show chef-node-1
+# admin:     false
+# chef_type: client
+# name:      chef-node-1
+# validator: false
+
+knife client show chef-node-2
+#admin:     false
+# chef_type: client
+# name:      chef-node-2
+# validator: false
+
+knife client list
+# chef-node-0
+# chef-node-1
+# chef-node-2
+# chef_demo-validator
