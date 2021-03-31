@@ -8,9 +8,11 @@ sudo sysctl -w vm.dirty_expire_centisecs=20000
 #To make these changes permanent, add the following to /etc/sysctl.conf:
 #vm.max_map_count=262144
 #vm.dirty_expire_centisecs=20000
+sudo echo "vm.max_map_count=26214" >> /etc/sysctl.conf
+sudo echo "vm.dirty_expire_centisecs=20000" >> /etc/sysctl.conf
 
-sudo chef-automate deploy --product automate --product infra-server
-sudo chef-automate init-config
+sudo ./chef-automate deploy --product automate --product infra-server
+sudo ./chef-automate init-config
 
 #Add a stanza to the configuration file to deploy Chef Automate and Chef Infra Server:
 sudo vi config.toml
@@ -32,6 +34,6 @@ sudo mkdir -p ~/.chef
 #sudo chef-server-ctl user-create USER_NAME FIRST_NAME LAST_NAME EMAIL 'PASSWORD' --filename USER_NAME.pem
 sudo chef-server-ctl user-create aaron Yu Zhou aaron.zhouyu@gmail.com 'passw0rd' --filename ~/.chef/aaron.pem
 #sudo chef-server-ctl org-create SHORT_NAME 'FULL_ORGANIZATION_NAME' --association_user USER_NAME --filename ORGANIZATION-validator.pem
-sudo chef-server-ctl org-create chef_demo 'Chef Demo' --association_user aaron --filename chef_demo.pem
+sudo chef-server-ctl org-create aaronzhou 'Aaron Zhou' --association_user aaron --filename ~/.chef/aaronzhou-validator.pem
 
 #Switch to the Chef WorkStation, and use SCP to copy the generated USER_NAME.pem and ORGANIZATION-validator.pem to ~/.chef, and create config.rb file and get SSL certs from the Chef Infra Server
