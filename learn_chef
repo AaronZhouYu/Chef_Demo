@@ -21,3 +21,18 @@ kitchen login centos/ubuntu/suse
 
 # Clean up your testing environment and delete your test instances
 kitchen destroy
+
+
+inspec exec auditd --key-files ~/.ssh/id_rsa --target ssh://aaron_zhouyu@35.187.245.208
+
+# Browse InSpec profiles on Chef Supermarket, supermarket.chef.io/tools
+inspect supermarket profiles
+
+# Get more info about a profile
+inspec supermarket info dev-sec/linux-baseline
+
+inspec supermarket exec dev-sec/linux-baseline -t ssh://aaron_zhouyu@35.187.245.208 --key-files ~/.ssh/id_rsa
+inspec exec https://github.com/dev-sec/linux-baseline -t ssh://aaron_zhouyu@35.187.245.208 --key-files ~/.ssh/id_rsa
+
+#Specify the --controls argument to run only certain controls
+inspec exec https://github.com/dev-sec/linux-baseline -t ssh://aaron_zhouyu@35.187.245.208 --key-files ~/.ssh/id_rsa --controls package-08
