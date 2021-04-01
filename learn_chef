@@ -1,0 +1,23 @@
+mkdir ~/learn-chef-infra
+
+# Download and Install Vagrant
+curl -O https://releases.hashicorp.com/vagrant/2.2.15/vagrant_2.2.15_x86_64.deb
+sudo apt install ./vagrant_2.2.15_x86_64.deb
+vagrant -v
+
+# Generate a cookbook for learning, and kitchen.yml is created in the cookbook directory
+chef generate cookbook learn_chef
+cat ./learn_chef/kitchen.yml
+
+# Validating that kitchen.yml is typo-free, and the information for each instance in the test environment
+kitchen list
+
+# Download an image of the appropriate operating system and deploy it against your test instances
+kitchen create
+
+# Create and edit recipes under the directory - ./recipes, and include the required recipes into the the default.rb, then deploy your changes
+kitchen converge
+kitchen login centos/ubuntu/suse
+
+# Clean up your testing environment and delete your test instances
+kitchen destroy
