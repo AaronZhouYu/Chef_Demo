@@ -11,17 +11,17 @@ sudo sysctl -w vm.dirty_expire_centisecs=20000
 sudo echo "vm.max_map_count=26214" >> /etc/sysctl.conf
 sudo echo "vm.dirty_expire_centisecs=20000" >> /etc/sysctl.conf
 
-sudo ./chef-automate deploy --product automate --product infra-server --product builder
-sudo chef-automate init-config
-
-#Add a stanza to the configuration file to deploy Chef Automate and Chef Infra Server:
+#Generate the default configuration file - config.toml, and then add a stanza to the configuration file.
+sudo ./chef-automate init-config
 sudo vi config.toml
 #  [deployment.v1.svc]
 #  products=["automate", "infra-server", "builder"]
 #  [global.v1]
 #  fqdn = "your-instance-public-ip-address"
 
-sudo chef-automate config set config.toml
+#To deploy the Chef Automate, Infra Server and the On-Prem Habitat Builder
+sudo ./chef-automate deploy config.toml --product automate --product chef-server --product builder --accept-terms-and-mlsa
+
 sudo chef-automate config show
 
 #To extract login credentials <username> and <password>
