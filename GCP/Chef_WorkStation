@@ -32,6 +32,21 @@ git status
 knife configure
 cd ~
 cp ~/chef-repo/.chef/*.pem ~/.chef/.
+
+#Or, without running 'knife configure', create a "config.rb" in the ~/chef-repo/.chef
+cat ./.chef/config.rb
+current_dir = File.dirname(__FILE__)
+log_level                :info
+log_location             STDOUT
+node_name                'aaron'
+client_key               "aaron.pem"
+validation_client_name   'aaronzhou-validator'
+validation_key           "aaronzhou-validator.pem"
+chef_server_url          'https://chef-automation.aaron81.com/organizations/aaronzhou'
+cache_type               'BasicFile'
+cache_options( :path => "#{ENV['HOME']}/.chef/checksums" )
+cookbook_path            ["#{current_dir}/../cookbooks"]
+
 knife ssl fetch
 knife client list
 knife ssl check
@@ -42,5 +57,8 @@ knife bootstrap 35.240.155.106 -i ~/.ssh/id_rsa -U aaron_zhouyu -N chef-node-1 -
 knife bootstrap 35.240.189.113 -i ~/.ssh/id_rsa -U aaron_zhouyu -N chef-node-2 --sudo
 
 #Bootstrap Chef Infra Client Node with 'knife bootstrap for AWS EC2 Instances
+knife bootstrap 13.212.38.129 -i ~/.ssh/aws/EC2_Test.pem -U ec2-user -N chef-node-0 --sudo
+knife bootstrap 13.250.50.143 -i ~/.ssh/aws/EC2_Test.pem -U ubuntu -N chef-node-1 --sudo
+knife bootstrap 13.212.217.115 -i ~/.ssh/aws/EC2_Test.pem -U admin -N chef-node-2 --sudo
 knife bootstrap 54.169.92.135 -i ~/.ssh/aws/EC2_Test.pem -U ec2-user -N chef-node-3 --sudo
 knife bootstrap 52.221.225.149 -i ~/.ssh/aws/EC2_Test.pem -U ec2-user -N chef-node-4 --sudo
