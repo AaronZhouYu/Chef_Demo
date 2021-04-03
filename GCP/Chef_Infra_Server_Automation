@@ -11,13 +11,13 @@ sudo sysctl -w vm.dirty_expire_centisecs=20000
 sudo echo "vm.max_map_count=26214" >> /etc/sysctl.conf
 sudo echo "vm.dirty_expire_centisecs=20000" >> /etc/sysctl.conf
 
-sudo ./chef-automate deploy --product automate --product infra-server
-sudo ./chef-automate init-config
+sudo ./chef-automate deploy --product automate --product infra-server --product builder
+sudo chef-automate init-config
 
 #Add a stanza to the configuration file to deploy Chef Automate and Chef Infra Server:
 sudo vi config.toml
 #  [deployment.v1.svc]
-#  products=["automate", "infra-server"]
+#  products=["automate", "infra-server", "builder"]
 #  [global.v1]
 #  fqdn = "your-instance-public-ip-address"
 
