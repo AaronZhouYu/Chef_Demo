@@ -1,7 +1,6 @@
 sudo apt update && sudo apt upgrade -y
 
-sudo wget https://packages.chef.io/files/stable/chef-workstation/21.2.303/ubuntu/20.04/chef-workstation_21.2.303-1_amd64.deb
-sudo chmod 755 chef-workstation_*
+sudo wget https://packages.chef.io/files/stable/chef-workstation/21.3.346/ubuntu/20.04/chef-workstation_21.3.346-1_amd64.deb
 sudo dpkg -i chef-workstation_*
 
 chef -v
@@ -14,9 +13,20 @@ chef generate repo chef-repo
 mkdir -p ~/chef-repo/.chef
 
 #After grnerating the .pem files from Chef Infra Server for user and organization, using SCP to download the .pem files to the directory: ~/chef-repo/.chef
-cd ~/chef-repo/.chef
-scp -i ~/.ssh/id_rsa aaron_zhouyu@10.148.0.2:~/.chef/aaron.pem ./
-scp -i ~/.ssh/id_rsa aaron_zhouyu@10.148.0.2:~/.chef/aaronzhou-validator.pem ./
+cd ~/chef-repo
+scp -i ~/.ssh/id_rsa aaron_zhouyu@10.148.0.2:~/.chef/aaron.pem ./.chef/.
+scp -i ~/.ssh/id_rsa aaron_zhouyu@10.148.0.2:~/.chef/aaronzhou-validator.pem ./.chef/.
+
+#The workstation is used to create, download, and edit cookbooks and other related files.
+#You should track any changes made to these files with version control software, like Git.
+#The Chef Workstation adds the Git component to your workstation and initializes a Git repository in the directory where the chef-repo was generated.
+#Configure Git by adding your username and email, and add and commit any new files created in the steps above.
+cd ~/chef-repo/
+git config --global user.name "Aaron Zhou"
+git config --global user.email aaron.zhouyu@gmail.com
+git add .
+git commit -m "initial commit"
+git status
 
 #Run 'knife configure' to generate the config.rb file in ~/.chef/
 knife configure
@@ -34,16 +44,3 @@ knife bootstrap 35.240.189.113 -i ~/.ssh/id_rsa -U aaron_zhouyu -N chef-node-2 -
 #Bootstrap Chef Infra Client Node with 'knife bootstrap for AWS EC2 Instances
 knife bootstrap 54.169.92.135 -i ~/.ssh/aws/EC2_Test.pem -U ec2-user -N chef-node-3 --sudo
 knife bootstrap 52.221.225.149 -i ~/.ssh/aws/EC2_Test.pem -U ec2-user -N chef-node-4 --sudo
-
-#The workstation is used to create, download, and edit cookbooks and other related files.
-#You should track any changes made to these files with version control software, like Git.
-#The Chef Workstation adds the Git component to your workstation and initializes a Git repository in the directory where the chef-repo was generated.
-#Configure Git by adding your username and email, and add and commit any new files created in the steps above.
-cd ~/chef-repo/
-git config --global user.name Aaron
-git config --global user.email aaron.zhouyu@gmail.com
-git add .
-git commit -m "initial commit"
-git status
-
-
