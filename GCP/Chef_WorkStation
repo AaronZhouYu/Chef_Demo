@@ -42,7 +42,7 @@ node_name                'aaron'
 client_key               "aaron.pem"
 validation_client_name   'aaronzhou-validator'
 validation_key           "aaronzhou-validator.pem"
-chef_server_url          'https://chef-automation.aaron81.com/organizations/aaronzhou'
+chef_server_url          'https://chef-automate.aaron81.com/organizations/aaronzhou'
 cache_type               'BasicFile'
 cache_options( :path => "#{ENV['HOME']}/.chef/checksums" )
 cookbook_path            ["#{current_dir}/../cookbooks"]
